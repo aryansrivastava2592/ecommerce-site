@@ -1,24 +1,31 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import React, { useContext } from "react";
-import toast from "react-hot-toast";
-import { Store } from "@/context/Store";
+import Link from 'next/link'
+import React, { useContext } from 'react'
+import { Store } from '@/context/Store'
+import toast from 'react-hot-toast'
 
-export default function ProductItem({ product }) {
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
+export default function ProductItem({ product, onAddToCart }) {
+  const { state, dispatch } = useContext(Store)
+  const { cart } = state
 
   const addToCartHandler = () => {
-    const existItem = cart.cartItems.find((x) => x.slug === product.slug);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const existItem = cart.cartItems.find((x) => x.slug === product.slug)
+    const quantity = existItem ? existItem.quantity + 1 : 1
     if (product.countInStock < quantity) {
-      toast.error("Sorry. Product is out of stock");
-      return;
+      toast.error('Sorry. Product is out of stock')
+      return
     }
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    toast.success("Product added to the cart");
-  };
+    // This dispatch updates the state. The smart StoreProvider will see this
+    // change and automatically save it to the database if the user is logged in.
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+    toast.success('Product added to the cart')
+
+    // This is the special function for the "Move from Wishlist" feature
+    if (onAddToCart) {
+      onAddToCart()
+    }
+  }
 
   return (
     <div className="card flex flex-col items-center justify-between p-4">
@@ -47,5 +54,5 @@ export default function ProductItem({ product }) {
         Add to cart
       </button>
     </div>
-  );
+  )
 }
