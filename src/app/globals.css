@@ -24,3 +24,75 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Add these at the end of the file */
+.card {
+  @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
+}
+
+.primary-button {
+  @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500;
+}
+
+.default-button {
+  @apply rounded bg-gray-200 py-2 px-4 text-black shadow outline-none hover:bg-gray-300 active:bg-gray-400;
+}
+/* Update the existing .embla class to add position: relative */
+.embla {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+
+/* --- ADD THESE NEW STYLES FOR THE BUTTONS --- */
+.embla__button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: 0;
+}
+.embla__button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.embla__button:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.embla__button--prev {
+  left: 1rem;
+}
+.embla__button--next {
+  right: 1rem;
+}
+.embla__button__svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+/* --- ADD THIS AT THE END OF THE FILE --- */
+/* For hiding the scrollbar while keeping the scroll functional */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
